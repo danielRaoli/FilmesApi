@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FilmesApi.Data.Dtos;
+namespace FilmesApi.Data.Dtos.FilmeDto;
 
-public class FilmeDto {
+public class CreateFilmeDto
+{
 
     [Required(ErrorMessage = "O titulo do filme é obrigatório")]
     [MaxLength(200, ErrorMessage = "O filme deve ter menos de 200 caracteres ")]

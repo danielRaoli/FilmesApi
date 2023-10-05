@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FilmesApi.Data.Dtos.SessaoDto;
+using System.ComponentModel.DataAnnotations;
 
-namespace FilmesApi.Data.Dtos
+namespace FilmesApi.Data.Dtos.FilmeDto
 {
     public class ReadFilmeDto
     {
@@ -14,6 +15,8 @@ namespace FilmesApi.Data.Dtos
         public int Duracao { get; set; }
 
         public DateTime ConsultDate = DateTime.Now;
+
+        public virtual ICollection<ReadSessaoDto> Sessoes { get; set; }
 
 
     }

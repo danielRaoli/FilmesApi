@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FilmesApi.Data;
-using FilmesApi.Data.Dtos;
+using FilmesApi.Data.Dtos.FilmeDto;
 using FilmesApi.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.JsonPatch;
@@ -24,7 +24,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AdcionarFilme([FromBody] FilmeDto filmeDto)
+    public IActionResult AdcionarFilme([FromBody] CreateFilmeDto filmeDto)
     {
         Filme filme = _mapper.Map<Filme>(filmeDto);
         _context.Filmes.Add(filme);
@@ -34,9 +34,10 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<FilmeDto> RetornaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    public IEnumerable<ReadFilmeDto> RetornaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _mapper.Map<List<FilmeDto>>(_context.Filmes.Skip(skip).Take(take));
+        return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take).ToList());
+       
     }
 
 
@@ -54,7 +55,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateFilme(int id, [FromBody]FilmeDto filmeDto)
+    public IActionResult UpdateFilme(int id, [FromBody]CreateFilmeDto filmeDto)
     {
         Filme filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
         if(filme == null) { return NotFound(); }
@@ -80,7 +81,7 @@ public class FilmeController : ControllerBase
 
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult DeletFilme(int id)
     {
         Filme filme = _context.Filmes.FirstOrDefault(f => f.Id==id);
